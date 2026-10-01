@@ -4,8 +4,12 @@ import os
 from ucl_open.core.experiment import ExperimentSession
 
 # TODO - autofill experiment fields
-session = Experiment(
-
+session = ExperimentSession(
+    repository_url="https://github.com/ucl-open/maze-runner",
+    commit="",
+    workflow="main.bonsai",
+    session_id="0_0_Track1RUN1",
+    subject_id="M26021"
 )
 
 def main(path_seed: str = "./local/{schema}.json"):

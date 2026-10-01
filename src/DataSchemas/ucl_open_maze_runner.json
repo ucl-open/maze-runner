@@ -1,5 +1,55 @@
 {
   "$defs": {
+    "BackgroundSubtractionParemeters": {
+      "properties": {
+        "thresholdValue": {
+          "title": "ThresholdValue",
+          "type": "number"
+        },
+        "backgroundFrames": {
+          "title": "BackgroundFrames",
+          "type": "integer"
+        },
+        "adaptationRate": {
+          "title": "AdaptationRate",
+          "type": "number"
+        }
+      },
+      "required": [
+        "thresholdValue",
+        "backgroundFrames",
+        "adaptationRate"
+      ],
+      "title": "BackgroundSubtractionParemeters",
+      "type": "object"
+    },
+    "CameraTriggerController": {
+      "description": "Represents a CameraTriggerController module on a BehaviorBoard device.",
+      "properties": {
+        "trigger0Frequency": {
+          "description": "The frequency, in Hz, at which to emit camera triggers on Trigger0 (DO0, CameraOutput0)",
+          "examples": [
+            "50"
+          ],
+          "title": "Trigger0Frequency",
+          "type": "integer"
+        },
+        "trigger1Frequency": {
+          "description": "The frequency, in Hz, at which to emit camera triggers on Trigger1 (DO1, CameraOutput1)",
+          "examples": [
+            "50"
+          ],
+          "title": "Trigger1Frequency",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "trigger0Frequency",
+        "trigger1Frequency"
+      ],
+      "title": "CameraTriggerController",
+      "type": "object"
+    },
     "ExperimentSession": {
       "description": "The base class for creating ucl-open experiment models.",
       "properties": {
@@ -39,6 +89,72 @@
       "title": "ExperimentSession",
       "type": "object"
     },
+    "HarpBehavior": {
+      "properties": {
+        "portName": {
+          "description": "The name of the device serial port.",
+          "examples": [
+            "COM"
+          ],
+          "title": "PortName",
+          "type": "string"
+        }
+      },
+      "required": [
+        "portName"
+      ],
+      "title": "HarpBehavior",
+      "type": "object"
+    },
+    "SpinnakerCamera": {
+      "properties": {
+        "triggerFrequency": {
+          "default": 50,
+          "description": "The frequency at which the camera is triggered (in Hz).",
+          "minimum": 1,
+          "title": "TriggerFrequency",
+          "type": "number"
+        },
+        "exposureTime": {
+          "default": 15000,
+          "description": "The exposure time for the camera (in microseconds).",
+          "minimum": 0,
+          "title": "ExposureTime",
+          "type": "number"
+        },
+        "serialNumber": {
+          "default": "00000",
+          "description": "The serial number of the camera.",
+          "title": "SerialNumber",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "gain": {
+          "default": 1,
+          "description": "The camera gain.",
+          "minimum": 0,
+          "title": "Gain",
+          "type": "number"
+        },
+        "binning": {
+          "default": 1,
+          "description": "The binning setting for the camera.",
+          "minimum": 1,
+          "title": "Binning",
+          "type": "integer"
+        },
+        "discriminatorType": {
+          "const": "SpinnakerCamera",
+          "default": "SpinnakerCamera",
+          "title": "DiscriminatorType",
+          "type": "string"
+        }
+      },
+      "title": "SpinnakerCamera",
+      "type": "object"
+    },
     "UclOpenMazeRunnerRig": {
       "properties": {
         "rootPath": {
@@ -51,10 +167,24 @@
           "default": "0.0.0-rc1",
           "title": "Version",
           "type": "string"
+        },
+        "camera": {
+          "$ref": "#/$defs/SpinnakerCamera",
+          "title": "Camera"
+        },
+        "behaviorBoard": {
+          "$ref": "#/$defs/HarpBehavior",
+          "title": "BehaviorBoard"
+        },
+        "cameraTriggerController": {
+          "$ref": "#/$defs/CameraTriggerController"
         }
       },
       "required": [
-        "rootPath"
+        "rootPath",
+        "camera",
+        "behaviorBoard",
+        "cameraTriggerController"
       ],
       "title": "UclOpenMazeRunnerRig",
       "type": "object"
@@ -87,7 +217,20 @@
       "type": "object"
     },
     "UclOpenMazeRunnerTaskParameters": {
-      "properties": {},
+      "properties": {
+        "initialBackgroundSubtraction": {
+          "$ref": "#/$defs/BackgroundSubtractionParemeters",
+          "title": "InitialBackgroundSubtraction"
+        },
+        "onlineBackgroundSubtraction": {
+          "$ref": "#/$defs/BackgroundSubtractionParemeters",
+          "title": "OnlineBackgroundSubtraction"
+        }
+      },
+      "required": [
+        "initialBackgroundSubtraction",
+        "onlineBackgroundSubtraction"
+      ],
       "title": "UclOpenMazeRunnerTaskParameters",
       "type": "object"
     }
