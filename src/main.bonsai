@@ -5,6 +5,7 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:OpenRigsMazeRunner;assembly=Extensions"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
+                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -294,26 +295,43 @@
       <Expression xsi:type="SubscribeSubject">
         <Name>FrameEvents</Name>
       </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>Value.Image</Selector>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="cv:Flip">
-          <cv:Mode>Both</cv:Mode>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="GroupWorkflow">
-        <Name>Image processing</Name>
+      <Expression xsi:type="harp:ConvertTimestamped">
+        <Name>FlipGrayscale</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="WorkflowInput">
               <Name>Source1</Name>
             </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Image</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Flip">
+                <cv:Mode>Both</cv:Mode>
+              </Combinator>
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Grayscale" />
             </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="harp:ConvertTimestamped">
+        <Name>ImageProcessing</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>TaskLogicParameters</Name>
+              <Name>RigSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>InitialBackgroundSubtraction.ThresholdValue</Selector>
@@ -351,76 +369,40 @@
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
-            <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="9" Label="Source1" />
+            <Edge From="0" To="8" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="1" To="4" Label="Source1" />
+            <Edge From="1" To="6" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="2" To="5" Label="Source1" />
-            <Edge From="2" To="7" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="9" Label="Source2" />
-            <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="9" Label="Source3" />
-            <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source4" />
-            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="3" To="8" Label="Source2" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="8" Label="Source3" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source4" />
+            <Edge From="8" To="9" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="GroupWorkflow">
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>BackgroundSubtracted</Name>
+      </Expression>
+      <Expression xsi:type="harp:ConvertTimestamped">
         <Name>GetAnimalPosition</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="WorkflowInput">
               <Name>Source1</Name>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="cv:WarpPerspective">
-                  <cv:Source>
-                    <cv:Point2f>
-                      <cv:X>46</cv:X>
-                      <cv:Y>28</cv:Y>
-                    </cv:Point2f>
-                    <cv:Point2f>
-                      <cv:X>16</cv:X>
-                      <cv:Y>440</cv:Y>
-                    </cv:Point2f>
-                    <cv:Point2f>
-                      <cv:X>638</cv:X>
-                      <cv:Y>476</cv:Y>
-                    </cv:Point2f>
-                    <cv:Point2f>
-                      <cv:X>636</cv:X>
-                      <cv:Y>76</cv:Y>
-                    </cv:Point2f>
-                  </cv:Source>
-                  <cv:Destination>
-                    <cv:Point2f>
-                      <cv:X>0</cv:X>
-                      <cv:Y>0</cv:Y>
-                    </cv:Point2f>
-                    <cv:Point2f>
-                      <cv:X>0</cv:X>
-                      <cv:Y>512</cv:Y>
-                    </cv:Point2f>
-                    <cv:Point2f>
-                      <cv:X>640</cv:X>
-                      <cv:Y>512</cv:Y>
-                    </cv:Point2f>
-                    <cv:Point2f>
-                      <cv:X>640</cv:X>
-                      <cv:Y>0</cv:Y>
-                    </cv:Point2f>
-                  </cv:Destination>
-                  <cv:Flags>Linear</cv:Flags>
-                  <cv:FillValue>
-                    <cv:Val0>0</cv:Val0>
-                    <cv:Val1>0</cv:Val1>
-                    <cv:Val2>0</cv:Val2>
-                    <cv:Val3>0</cv:Val3>
-                  </cv:FillValue>
-                </Combinator>
-              </Builder>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RigSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>AnimalContourParameters.MinArea</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="MinArea" />
+              </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:FindContours">
@@ -440,27 +422,88 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:LargestBinaryRegion" />
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>AnimalBinary</Name>
-            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Centroid" />
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
-            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="0" To="4" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="3" To="4" Label="Source2" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="rx:BehaviorSubject">
         <Name>AnimalPosition</Name>
+      </Expression>
+      <Expression xsi:type="harp:ConvertTimestamped">
+        <Name>MobilityPixelChange</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RigSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>OnlineBackgroundSubtraction.BackgroundFrames</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="BackgroundFrames" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>OnlineBackgroundSubtraction.AdaptationRate</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="AdaptationRate" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>OnlineBackgroundSubtraction.ThresholdValue</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="ThresholdValue" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:BackgroundSubtraction">
+                <cv:BackgroundFrames>1</cv:BackgroundFrames>
+                <cv:AdaptationRate>0</cv:AdaptationRate>
+                <cv:ThresholdValue>0</cv:ThresholdValue>
+                <cv:ThresholdType>Binary</cv:ThresholdType>
+                <cv:SubtractionMethod>Absolute</cv:SubtractionMethod>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="8" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="1" To="4" Label="Source1" />
+            <Edge From="1" To="6" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="8" Label="Source2" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="8" Label="Source3" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source4" />
+            <Edge From="8" To="9" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>MobilityPixelChange</Name>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Logging</Name>
@@ -508,13 +551,20 @@
               <Name>BehaviorEvents</Name>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogHarpDevice.bonsai">
-              <LogName>HarpDevice</LogName>
+              <LogName>BehaviorBoard</LogName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogVideo.bonsai">
-              <LogName>VideoData_Camera1</LogName>
+              <LogName>VideoData</LogName>
+              <FrameRate>50</FrameRate>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>BackgroundSubtracted</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogRawVideo.bonsai">
+              <LogName>BackgroundSubtracted</LogName>
               <FrameRate>50</FrameRate>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -526,7 +576,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogDataSchema.bonsai">
-              <Name>Schema</Name>
+              <Name>SessionSettings</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RigSchema</Name>
@@ -537,7 +587,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogDataSchema.bonsai">
-              <Name>Schema</Name>
+              <Name>RigSettings</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>TaskLogicSchema</Name>
@@ -548,7 +598,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogDataSchema.bonsai">
-              <Name>Schema</Name>
+              <Name>TaskLogicSettings</Name>
             </Expression>
           </Nodes>
           <Edges>
@@ -564,11 +614,12 @@
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -576,11 +627,13 @@
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
       <Edge From="4" To="5" Label="Source1" />
-      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="6" To="7" Label="Source2" />
       <Edge From="7" To="8" Label="Source1" />
       <Edge From="8" To="9" Label="Source1" />
       <Edge From="9" To="10" Label="Source1" />
+      <Edge From="9" To="12" Label="Source1" />
       <Edge From="10" To="11" Label="Source1" />
+      <Edge From="12" To="13" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>

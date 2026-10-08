@@ -362,6 +362,68 @@ namespace OpenRigsMazeRunner
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class FindContoursParameters
+    {
+    
+        private double _minArea;
+    
+        public FindContoursParameters()
+        {
+        }
+    
+        protected FindContoursParameters(FindContoursParameters other)
+        {
+            _minArea = other._minArea;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("minArea", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="minArea")]
+        public double MinArea
+        {
+            get
+            {
+                return _minArea;
+            }
+            set
+            {
+                _minArea = value;
+            }
+        }
+    
+        public System.IObservable<FindContoursParameters> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new FindContoursParameters(this)));
+        }
+    
+        public System.IObservable<FindContoursParameters> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new FindContoursParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("MinArea = " + _minArea);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpBehavior
     {
     
@@ -439,11 +501,20 @@ namespace OpenRigsMazeRunner
     
         private CameraTriggerController _cameraTriggerController;
     
+        private BackgroundSubtractionParemeters _initialBackgroundSubtraction;
+    
+        private BackgroundSubtractionParemeters _onlineBackgroundSubtraction;
+    
+        private FindContoursParameters _animalContourParameters;
+    
         public OpenRigsMazeRunnerRig()
         {
             _camera = new SpinnakerCamera();
             _behaviorBoard = new HarpBehavior();
             _cameraTriggerController = new CameraTriggerController();
+            _initialBackgroundSubtraction = new BackgroundSubtractionParemeters();
+            _onlineBackgroundSubtraction = new BackgroundSubtractionParemeters();
+            _animalContourParameters = new FindContoursParameters();
         }
     
         protected OpenRigsMazeRunnerRig(OpenRigsMazeRunnerRig other)
@@ -452,6 +523,9 @@ namespace OpenRigsMazeRunner
             _camera = other._camera;
             _behaviorBoard = other._behaviorBoard;
             _cameraTriggerController = other._cameraTriggerController;
+            _initialBackgroundSubtraction = other._initialBackgroundSubtraction;
+            _onlineBackgroundSubtraction = other._onlineBackgroundSubtraction;
+            _animalContourParameters = other._animalContourParameters;
         }
     
         /// <summary>
@@ -517,153 +591,6 @@ namespace OpenRigsMazeRunner
             }
         }
     
-        public System.IObservable<OpenRigsMazeRunnerRig> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OpenRigsMazeRunnerRig(this)));
-        }
-    
-        public System.IObservable<OpenRigsMazeRunnerRig> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new OpenRigsMazeRunnerRig(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("RootPath = " + _rootPath + ", ");
-            stringBuilder.Append("Camera = " + _camera + ", ");
-            stringBuilder.Append("BehaviorBoard = " + _behaviorBoard + ", ");
-            stringBuilder.Append("CameraTriggerController = " + _cameraTriggerController);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class OpenRigsMazeRunnerTaskLogic
-    {
-    
-        private string _name;
-    
-        private OpenRigsMazeRunnerTaskParameters _taskParameters;
-    
-        public OpenRigsMazeRunnerTaskLogic()
-        {
-            _name = "OpenRigsMazeRunner";
-            _taskParameters = new OpenRigsMazeRunnerTaskParameters();
-        }
-    
-        protected OpenRigsMazeRunnerTaskLogic(OpenRigsMazeRunnerTaskLogic other)
-        {
-            _name = other._name;
-            _taskParameters = other._taskParameters;
-        }
-    
-        /// <summary>
-        /// Name of the task logic
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("name")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        [System.ComponentModel.DescriptionAttribute("Name of the task logic")]
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
-        }
-    
-        /// <summary>
-        /// Parameters of the task logic
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("taskParameters", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskParameters")]
-        [System.ComponentModel.DescriptionAttribute("Parameters of the task logic")]
-        public OpenRigsMazeRunnerTaskParameters TaskParameters
-        {
-            get
-            {
-                return _taskParameters;
-            }
-            set
-            {
-                _taskParameters = value;
-            }
-        }
-    
-        public System.IObservable<OpenRigsMazeRunnerTaskLogic> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OpenRigsMazeRunnerTaskLogic(this)));
-        }
-    
-        public System.IObservable<OpenRigsMazeRunnerTaskLogic> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new OpenRigsMazeRunnerTaskLogic(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Name = " + _name + ", ");
-            stringBuilder.Append("TaskParameters = " + _taskParameters);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class OpenRigsMazeRunnerTaskParameters
-    {
-    
-        private BackgroundSubtractionParemeters _initialBackgroundSubtraction;
-    
-        private BackgroundSubtractionParemeters _onlineBackgroundSubtraction;
-    
-        public OpenRigsMazeRunnerTaskParameters()
-        {
-            _initialBackgroundSubtraction = new BackgroundSubtractionParemeters();
-            _onlineBackgroundSubtraction = new BackgroundSubtractionParemeters();
-        }
-    
-        protected OpenRigsMazeRunnerTaskParameters(OpenRigsMazeRunnerTaskParameters other)
-        {
-            _initialBackgroundSubtraction = other._initialBackgroundSubtraction;
-            _onlineBackgroundSubtraction = other._onlineBackgroundSubtraction;
-        }
-    
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("initialBackgroundSubtraction", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialBackgroundSubtraction")]
@@ -694,20 +621,104 @@ namespace OpenRigsMazeRunner
             }
         }
     
-        public System.IObservable<OpenRigsMazeRunnerTaskParameters> Generate()
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("animalContourParameters", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="animalContourParameters")]
+        public FindContoursParameters AnimalContourParameters
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OpenRigsMazeRunnerTaskParameters(this)));
+            get
+            {
+                return _animalContourParameters;
+            }
+            set
+            {
+                _animalContourParameters = value;
+            }
         }
     
-        public System.IObservable<OpenRigsMazeRunnerTaskParameters> Generate<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OpenRigsMazeRunnerRig> Generate()
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new OpenRigsMazeRunnerTaskParameters(this));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OpenRigsMazeRunnerRig(this)));
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerRig> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new OpenRigsMazeRunnerRig(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
+            stringBuilder.Append("RootPath = " + _rootPath + ", ");
+            stringBuilder.Append("Camera = " + _camera + ", ");
+            stringBuilder.Append("BehaviorBoard = " + _behaviorBoard + ", ");
+            stringBuilder.Append("CameraTriggerController = " + _cameraTriggerController + ", ");
             stringBuilder.Append("InitialBackgroundSubtraction = " + _initialBackgroundSubtraction + ", ");
-            stringBuilder.Append("OnlineBackgroundSubtraction = " + _onlineBackgroundSubtraction);
+            stringBuilder.Append("OnlineBackgroundSubtraction = " + _onlineBackgroundSubtraction + ", ");
+            stringBuilder.Append("AnimalContourParameters = " + _animalContourParameters);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class OpenRigsMazeRunnerTaskLogic
+    {
+    
+        private TaskParameters _taskParameters;
+    
+        public OpenRigsMazeRunnerTaskLogic()
+        {
+            _taskParameters = new TaskParameters();
+        }
+    
+        protected OpenRigsMazeRunnerTaskLogic(OpenRigsMazeRunnerTaskLogic other)
+        {
+            _taskParameters = other._taskParameters;
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("taskParameters", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskParameters")]
+        public TaskParameters TaskParameters
+        {
+            get
+            {
+                return _taskParameters;
+            }
+            set
+            {
+                _taskParameters = value;
+            }
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerTaskLogic> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OpenRigsMazeRunnerTaskLogic(this)));
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerTaskLogic> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new OpenRigsMazeRunnerTaskLogic(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("TaskParameters = " + _taskParameters);
             return true;
         }
     
@@ -907,6 +918,72 @@ namespace OpenRigsMazeRunner
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class TaskParameters
+    {
+    
+        private double? _rngSeed;
+    
+        public TaskParameters()
+        {
+        }
+    
+        protected TaskParameters(TaskParameters other)
+        {
+            _rngSeed = other._rngSeed;
+        }
+    
+        /// <summary>
+        /// Seed of the random number generator for these task parameters
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("rngSeed")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rngSeed")]
+        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator for these task parameters")]
+        public double? RngSeed
+        {
+            get
+            {
+                return _rngSeed;
+            }
+            set
+            {
+                _rngSeed = value;
+            }
+        }
+    
+        public System.IObservable<TaskParameters> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TaskParameters(this)));
+        }
+    
+        public System.IObservable<TaskParameters> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TaskParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("RngSeed = " + _rngSeed);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Json
     {
     
@@ -981,6 +1058,11 @@ namespace OpenRigsMazeRunner
             return Process<ExperimentSession>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<FindContoursParameters> source)
+        {
+            return Process<FindContoursParameters>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpBehavior> source)
         {
             return Process<HarpBehavior>(source);
@@ -996,14 +1078,14 @@ namespace OpenRigsMazeRunner
             return Process<OpenRigsMazeRunnerTaskLogic>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<OpenRigsMazeRunnerTaskParameters> source)
-        {
-            return Process<OpenRigsMazeRunnerTaskParameters>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
             return Process<SpinnakerCamera>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TaskParameters> source)
+        {
+            return Process<TaskParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Json> source)
@@ -1023,11 +1105,12 @@ namespace OpenRigsMazeRunner
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BackgroundSubtractionParemeters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraTriggerController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExperimentSession>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<FindContoursParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskLogic>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Json>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -1093,6 +1176,11 @@ namespace OpenRigsMazeRunner
             return Process<ExperimentSession>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<FindContoursParameters> source)
+        {
+            return Process<FindContoursParameters>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpBehavior> source)
         {
             return Process<HarpBehavior>(source);
@@ -1108,14 +1196,14 @@ namespace OpenRigsMazeRunner
             return Process<OpenRigsMazeRunnerTaskLogic>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<OpenRigsMazeRunnerTaskParameters> source)
-        {
-            return Process<OpenRigsMazeRunnerTaskParameters>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
             return Process<SpinnakerCamera>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TaskParameters> source)
+        {
+            return Process<TaskParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Json> source)
@@ -1135,11 +1223,12 @@ namespace OpenRigsMazeRunner
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BackgroundSubtractionParemeters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraTriggerController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExperimentSession>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<FindContoursParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskLogic>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Json>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {

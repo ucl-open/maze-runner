@@ -89,6 +89,19 @@
       "title": "ExperimentSession",
       "type": "object"
     },
+    "FindContoursParameters": {
+      "properties": {
+        "minArea": {
+          "title": "MinArea",
+          "type": "number"
+        }
+      },
+      "required": [
+        "minArea"
+      ],
+      "title": "FindContoursParameters",
+      "type": "object"
+    },
     "HarpBehavior": {
       "properties": {
         "portName": {
@@ -123,40 +136,7 @@
         },
         "cameraTriggerController": {
           "$ref": "#/$defs/CameraTriggerController"
-        }
-      },
-      "required": [
-        "rootPath",
-        "camera",
-        "behaviorBoard",
-        "cameraTriggerController"
-      ],
-      "title": "OpenRigsMazeRunnerRig",
-      "type": "object"
-    },
-    "OpenRigsMazeRunnerTaskLogic": {
-      "properties": {
-        "name": {
-          "const": "OpenRigsMazeRunner",
-          "default": "OpenRigsMazeRunner",
-          "description": "Name of the task logic",
-          "title": "Name",
-          "type": "string"
         },
-        "taskParameters": {
-          "$ref": "#/$defs/OpenRigsMazeRunnerTaskParameters",
-          "description": "Parameters of the task logic",
-          "title": "TaskParameters"
-        }
-      },
-      "required": [
-        "taskParameters"
-      ],
-      "title": "OpenRigsMazeRunnerTaskLogic",
-      "type": "object"
-    },
-    "OpenRigsMazeRunnerTaskParameters": {
-      "properties": {
         "initialBackgroundSubtraction": {
           "$ref": "#/$defs/BackgroundSubtractionParemeters",
           "title": "InitialBackgroundSubtraction"
@@ -164,13 +144,34 @@
         "onlineBackgroundSubtraction": {
           "$ref": "#/$defs/BackgroundSubtractionParemeters",
           "title": "OnlineBackgroundSubtraction"
+        },
+        "animalContourParameters": {
+          "$ref": "#/$defs/FindContoursParameters",
+          "title": "AnimalContourParameters"
         }
       },
       "required": [
+        "rootPath",
+        "camera",
+        "behaviorBoard",
+        "cameraTriggerController",
         "initialBackgroundSubtraction",
-        "onlineBackgroundSubtraction"
+        "onlineBackgroundSubtraction",
+        "animalContourParameters"
       ],
-      "title": "OpenRigsMazeRunnerTaskParameters",
+      "title": "OpenRigsMazeRunnerRig",
+      "type": "object"
+    },
+    "OpenRigsMazeRunnerTaskLogic": {
+      "properties": {
+        "taskParameters": {
+          "$ref": "#/$defs/TaskParameters"
+        }
+      },
+      "required": [
+        "taskParameters"
+      ],
+      "title": "OpenRigsMazeRunnerTaskLogic",
       "type": "object"
     },
     "SpinnakerCamera": {
@@ -220,6 +221,21 @@
         }
       },
       "title": "SpinnakerCamera",
+      "type": "object"
+    },
+    "TaskParameters": {
+      "properties": {
+        "rngSeed": {
+          "default": null,
+          "description": "Seed of the random number generator for these task parameters",
+          "title": "RngSeed",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "title": "TaskParameters",
       "type": "object"
     }
   },
