@@ -165,13 +165,60 @@
     "OpenRigsMazeRunnerTaskLogic": {
       "properties": {
         "taskParameters": {
-          "$ref": "#/$defs/TaskParameters"
+          "$ref": "#/$defs/OpenRigsMazeRunnerTaskParameters",
+          "title": "TaskParameters"
         }
       },
       "required": [
         "taskParameters"
       ],
       "title": "OpenRigsMazeRunnerTaskLogic",
+      "type": "object"
+    },
+    "OpenRigsMazeRunnerTaskParameters": {
+      "properties": {
+        "rngSeed": {
+          "default": null,
+          "description": "Seed of the random number generator for these task parameters",
+          "title": "RngSeed",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "rewardSequence": {
+          "items": {
+            "$ref": "#/$defs/RewardZone"
+          },
+          "title": "RewardSequence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "rewardSequence"
+      ],
+      "title": "OpenRigsMazeRunnerTaskParameters",
+      "type": "object"
+    },
+    "RewardZone": {
+      "properties": {
+        "region": {
+          "items": {
+            "$ref": "#/$defs/Vector2"
+          },
+          "title": "Region",
+          "type": "array"
+        },
+        "rewardCommand": {
+          "title": "RewardCommand",
+          "type": "string"
+        }
+      },
+      "required": [
+        "region",
+        "rewardCommand"
+      ],
+      "title": "RewardZone",
       "type": "object"
     },
     "SpinnakerCamera": {
@@ -223,19 +270,24 @@
       "title": "SpinnakerCamera",
       "type": "object"
     },
-    "TaskParameters": {
+    "Vector2": {
       "properties": {
-        "rngSeed": {
-          "default": null,
-          "description": "Seed of the random number generator for these task parameters",
-          "title": "RngSeed",
-          "type": [
-            "number",
-            "null"
-          ]
+        "x": {
+          "description": "X coordinate of the point.",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y coordinate of the point.",
+          "title": "Y",
+          "type": "number"
         }
       },
-      "title": "TaskParameters",
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Vector2",
       "type": "object"
     }
   },

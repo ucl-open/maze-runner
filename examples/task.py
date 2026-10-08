@@ -3,10 +3,23 @@ import os
 from open_rigs_maze_runner.task import (
     OpenRigsMazeRunnerTaskLogic,
     OpenRigsMazeRunnerTaskParameters,
+    RewardZone
 )
+from open_rigs.core import Vector2
 
 task_logic = OpenRigsMazeRunnerTaskLogic(
-    task_parameters=OpenRigsMazeRunnerTaskParameters(),
+    task_parameters=OpenRigsMazeRunnerTaskParameters(
+        reward_sequence=[
+            RewardZone(
+                region=[Vector2(x=44, y=193), Vector2(x=129, y=193), Vector2(x=129, y=279), Vector2(x=44, y=279)],
+                reward_command="l100"
+            ),
+            RewardZone(
+                region=[Vector2(x=541, y=201), Vector2(x=608, y=201), Vector2(x=608, y=287), Vector2(x=541, y=287)],
+                reward_command="r100"
+            )
+        ]
+    ),
 )
 
 def main(path_seed: str = "./local/{schema}.json"):

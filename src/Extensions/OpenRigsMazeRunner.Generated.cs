@@ -679,11 +679,11 @@ namespace OpenRigsMazeRunner
     public partial class OpenRigsMazeRunnerTaskLogic
     {
     
-        private TaskParameters _taskParameters;
+        private OpenRigsMazeRunnerTaskParameters _taskParameters;
     
         public OpenRigsMazeRunnerTaskLogic()
         {
-            _taskParameters = new TaskParameters();
+            _taskParameters = new OpenRigsMazeRunnerTaskParameters();
         }
     
         protected OpenRigsMazeRunnerTaskLogic(OpenRigsMazeRunnerTaskLogic other)
@@ -694,7 +694,7 @@ namespace OpenRigsMazeRunner
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("taskParameters", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskParameters")]
-        public TaskParameters TaskParameters
+        public OpenRigsMazeRunnerTaskParameters TaskParameters
         {
             get
             {
@@ -719,6 +719,174 @@ namespace OpenRigsMazeRunner
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("TaskParameters = " + _taskParameters);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class OpenRigsMazeRunnerTaskParameters
+    {
+    
+        private double? _rngSeed;
+    
+        private System.Collections.Generic.List<RewardZone> _rewardSequence;
+    
+        public OpenRigsMazeRunnerTaskParameters()
+        {
+            _rewardSequence = new System.Collections.Generic.List<RewardZone>();
+        }
+    
+        protected OpenRigsMazeRunnerTaskParameters(OpenRigsMazeRunnerTaskParameters other)
+        {
+            _rngSeed = other._rngSeed;
+            _rewardSequence = other._rewardSequence;
+        }
+    
+        /// <summary>
+        /// Seed of the random number generator for these task parameters
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("rngSeed")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rngSeed")]
+        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator for these task parameters")]
+        public double? RngSeed
+        {
+            get
+            {
+                return _rngSeed;
+            }
+            set
+            {
+                _rngSeed = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rewardSequence", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardSequence")]
+        public System.Collections.Generic.List<RewardZone> RewardSequence
+        {
+            get
+            {
+                return _rewardSequence;
+            }
+            set
+            {
+                _rewardSequence = value;
+            }
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerTaskParameters> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OpenRigsMazeRunnerTaskParameters(this)));
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerTaskParameters> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new OpenRigsMazeRunnerTaskParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("RngSeed = " + _rngSeed + ", ");
+            stringBuilder.Append("RewardSequence = " + _rewardSequence);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class RewardZone
+    {
+    
+        private System.Collections.Generic.List<Vector2> _region;
+    
+        private string _rewardCommand;
+    
+        public RewardZone()
+        {
+            _region = new System.Collections.Generic.List<Vector2>();
+        }
+    
+        protected RewardZone(RewardZone other)
+        {
+            _region = other._region;
+            _rewardCommand = other._rewardCommand;
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("region", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="region")]
+        public System.Collections.Generic.List<Vector2> Region
+        {
+            get
+            {
+                return _region;
+            }
+            set
+            {
+                _region = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("rewardCommand", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardCommand")]
+        public string RewardCommand
+        {
+            get
+            {
+                return _rewardCommand;
+            }
+            set
+            {
+                _rewardCommand = value;
+            }
+        }
+    
+        public System.IObservable<RewardZone> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RewardZone(this)));
+        }
+    
+        public System.IObservable<RewardZone> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new RewardZone(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Region = " + _region + ", ");
+            stringBuilder.Append("RewardCommand = " + _rewardCommand);
             return true;
         }
     
@@ -918,51 +1086,73 @@ namespace OpenRigsMazeRunner
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class TaskParameters
+    public partial class Vector2
     {
     
-        private double? _rngSeed;
+        private double _x;
     
-        public TaskParameters()
+        private double _y;
+    
+        public Vector2()
         {
         }
     
-        protected TaskParameters(TaskParameters other)
+        protected Vector2(Vector2 other)
         {
-            _rngSeed = other._rngSeed;
+            _x = other._x;
+            _y = other._y;
         }
     
         /// <summary>
-        /// Seed of the random number generator for these task parameters
+        /// X coordinate of the point.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("rngSeed")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rngSeed")]
-        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator for these task parameters")]
-        public double? RngSeed
+        [Newtonsoft.Json.JsonPropertyAttribute("x", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
+        [System.ComponentModel.DescriptionAttribute("X coordinate of the point.")]
+        public double X
         {
             get
             {
-                return _rngSeed;
+                return _x;
             }
             set
             {
-                _rngSeed = value;
+                _x = value;
             }
         }
     
-        public System.IObservable<TaskParameters> Generate()
+        /// <summary>
+        /// Y coordinate of the point.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("y", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
+        [System.ComponentModel.DescriptionAttribute("Y coordinate of the point.")]
+        public double Y
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TaskParameters(this)));
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
         }
     
-        public System.IObservable<TaskParameters> Generate<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Vector2> Generate()
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new TaskParameters(this));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Vector2(this)));
+        }
+    
+        public System.IObservable<Vector2> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Vector2(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("RngSeed = " + _rngSeed);
+            stringBuilder.Append("X = " + _x + ", ");
+            stringBuilder.Append("Y = " + _y);
             return true;
         }
     
@@ -1078,14 +1268,24 @@ namespace OpenRigsMazeRunner
             return Process<OpenRigsMazeRunnerTaskLogic>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<OpenRigsMazeRunnerTaskParameters> source)
+        {
+            return Process<OpenRigsMazeRunnerTaskParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RewardZone> source)
+        {
+            return Process<RewardZone>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
             return Process<SpinnakerCamera>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<TaskParameters> source)
+        public System.IObservable<string> Process(System.IObservable<Vector2> source)
         {
-            return Process<TaskParameters>(source);
+            return Process<Vector2>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Json> source)
@@ -1109,8 +1309,10 @@ namespace OpenRigsMazeRunner
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardZone>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector2>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Json>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -1196,14 +1398,24 @@ namespace OpenRigsMazeRunner
             return Process<OpenRigsMazeRunnerTaskLogic>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<OpenRigsMazeRunnerTaskParameters> source)
+        {
+            return Process<OpenRigsMazeRunnerTaskParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RewardZone> source)
+        {
+            return Process<RewardZone>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
             return Process<SpinnakerCamera>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<TaskParameters> source)
+        public System.IObservable<string> Process(System.IObservable<Vector2> source)
         {
-            return Process<TaskParameters>(source);
+            return Process<Vector2>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Json> source)
@@ -1227,8 +1439,10 @@ namespace OpenRigsMazeRunner
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardZone>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector2>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Json>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
