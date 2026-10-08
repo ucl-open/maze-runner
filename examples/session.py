@@ -1,15 +1,11 @@
 import datetime
 import os
 
-from ucl_open.core.experiment import ExperimentSession
+from open_rigs.core.experiment import ExperimentSession
 
 # TODO - autofill experiment fields
-session = ExperimentSession(
-    repository_url="https://github.com/ucl-open/maze-runner",
-    commit="",
-    workflow="main.bonsai",
-    session_id="0_0_Track1RUN1",
-    subject_id="M26021"
+session = Experiment(
+
 )
 
 def main(path_seed: str = "./local/{schema}.json"):
