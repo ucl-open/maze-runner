@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.9.1"
+<WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p1="clr-namespace:UclOpenMazeRunner;assembly=Extensions"
+                 xmlns:p1="clr-namespace:OpenRigsMazeRunner;assembly=Extensions"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
-                 xmlns:p2="clr-namespace:UclOpen.Core;assembly=UclOpen.Core"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -93,7 +92,7 @@
               <Name>RawRigSchema</Name>
             </Expression>
             <Expression xsi:type="p1:DeserializeFromJson">
-              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:UclOpenMazeRunnerRig" />
+              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:OpenRigsMazeRunnerRig" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -112,7 +111,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="p1:DeserializeFromJson">
-              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:UclOpenMazeRunnerTaskLogic" />
+              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:OpenRigsMazeRunnerTaskLogic" />
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
               <Name>TaskLogicSchema</Name>
@@ -170,11 +169,11 @@
                 <Property Name="Gain" />
               </PropertyMappings>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Devices:TriggeredSpinnaker.bonsai">
-              <ExposureTime>15000</ExposureTime>
-              <Gain>10</Gain>
+            <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Devices:TriggeredSpinnaker.bonsai">
+              <ExposureTime>19000</ExposureTime>
+              <Gain>0</Gain>
               <Binning>1</Binning>
-              <SerialNumber>18474551</SerialNumber>
+              <SerialNumber xsi:nil="true" />
               <ColorProcessing>Default</ColorProcessing>
               <CameraTriggerEventsSubjectName>Camera0TriggerEvents</CameraTriggerEventsSubjectName>
               <FrameEventsSubjectName>FrameEvents</FrameEventsSubjectName>
@@ -190,9 +189,9 @@
                 <Property Name="PortName" />
               </PropertyMappings>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Devices:BehaviorBoard.BehaviorBoard.bonsai">
+            <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Devices:BehaviorBoard.BehaviorBoard.bonsai">
               <CommandsSubjectName>BehaviorCommands</CommandsSubjectName>
-              <PortName>COM9</PortName>
+              <PortName>COMx</PortName>
               <DumpRegisters>true</DumpRegisters>
               <Heartbeat>Disabled</Heartbeat>
               <EventsSubjectName>BehaviorEvents</EventsSubjectName>
@@ -216,9 +215,9 @@
                 <Property Name="Trigger1Frequency" />
               </PropertyMappings>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Devices:BehaviorBoard.CameraTriggerController.bonsai">
-              <Trigger0Frequency>60</Trigger0Frequency>
-              <Trigger1Frequency>60</Trigger1Frequency>
+            <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Devices:BehaviorBoard.CameraTriggerController.bonsai">
+              <Trigger0Frequency>50</Trigger0Frequency>
+              <Trigger1Frequency>50</Trigger1Frequency>
               <BehaviorCommandsSubjectName>BehaviorCommands</BehaviorCommandsSubjectName>
               <BehaviorEventsSubjectName>BehaviorEvents</BehaviorEventsSubjectName>
               <Camera0TriggerEventsSubjectName>Camera0TriggerEvents</Camera0TriggerEventsSubjectName>
@@ -500,260 +499,23 @@
                 <Property Name="Path" />
               </PropertyMappings>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Logging:LogController.bonsai">
-              <SubjectId>M26021</SubjectId>
-              <SessionId>0_0_Track1RUN1</SessionId>
-              <Path>C:/temp_data</Path>
+            <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogController.bonsai">
+              <SubjectId>Algernon</SubjectId>
+              <SessionId>001</SessionId>
+              <Path>D:\LocalData</Path>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>BehaviorEvents</Name>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Logging:LogHarpDevice.bonsai">
-              <LogName>BehaviorBoard</LogName>
+            <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogHarpDevice.bonsai">
+              <LogName>HarpDevice</LogName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
             </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>LogVideo</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p2:GroupByTime">
-                      <p2:ChunkSize>1</p2:ChunkSize>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Name" DisplayName="LogName" Description="The base name of the video log, without extension." />
-                    <Property Name="FrameRate" />
-                  </Expression>
-                  <Expression xsi:type="rx:CreateObservable">
-                    <Name>LogVideo</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="rx:AsyncSubject">
-                          <Name>Data</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>Data</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>Data</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Key</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Name" />
-                        </Expression>
-                        <Expression xsi:type="GroupWorkflow">
-                          <Name>FormatFileName</Name>
-                          <Description>Generates a log filename based on the input timestamp.</Description>
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>PathPrefix</Name>
-                              </Expression>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="ExternalizedMapping">
-                                <Property Name="Value" DisplayName="Name" Description="The base name of the log file." />
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="StringProperty">
-                                  <Value>VideoData</Value>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p2:StripSubstring" />
-                              </Expression>
-                              <Expression xsi:type="ExternalizedMapping">
-                                <Property Name="Value" DisplayName="Extension" Description="The file extension" />
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="StringProperty">
-                                  <Value>csv</Value>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Take">
-                                  <rx:Count>1</rx:Count>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Zip" />
-                              </Expression>
-                              <Expression xsi:type="Format">
-                                <Format>{0}\{1}\{2}.{3}</Format>
-                                <Selector>Item1,Item2,Item3,Item4</Selector>
-                              </Expression>
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="8" Label="Source1" />
-                              <Edge From="1" To="3" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source2" />
-                              <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="3" To="8" Label="Source3" />
-                              <Edge From="4" To="8" Label="Source2" />
-                              <Edge From="5" To="6" Label="Source1" />
-                              <Edge From="6" To="7" Label="Source1" />
-                              <Edge From="7" To="8" Label="Source4" />
-                              <Edge From="8" To="9" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="FileName" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="io:CsvWriter">
-                          <io:FileName>C:/temp_data\sub-M26021\ses-0_0_Track1RUN1_date-2026-10-01T14-54-38\VideoData\VideoData.csv</io:FileName>
-                          <io:Append>false</io:Append>
-                          <io:Overwrite>false</io:Overwrite>
-                          <io:Suffix>None</io:Suffix>
-                          <io:IncludeHeader>true</io:IncludeHeader>
-                          <io:Selector>Seconds</io:Selector>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Value.Image</Selector>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>Data</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Key</Selector>
-                        </Expression>
-                        <Expression xsi:type="GroupWorkflow">
-                          <Name>FormatFileName</Name>
-                          <Description>Generates a log filename based on the input timestamp.</Description>
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>PathPrefix</Name>
-                              </Expression>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="ExternalizedMapping">
-                                <Property Name="Value" DisplayName="Name" Description="The base name of the log file." />
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="StringProperty">
-                                  <Value>VideoData</Value>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p2:StripSubstring" />
-                              </Expression>
-                              <Expression xsi:type="ExternalizedMapping">
-                                <Property Name="Value" DisplayName="Extension" Description="The file extension" />
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="StringProperty">
-                                  <Value>avi</Value>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Take">
-                                  <rx:Count>1</rx:Count>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Zip" />
-                              </Expression>
-                              <Expression xsi:type="Format">
-                                <Format>{0}\{1}\{2}.{3}</Format>
-                                <Selector>Item1,Item2,Item3,Item4</Selector>
-                              </Expression>
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="8" Label="Source1" />
-                              <Edge From="1" To="3" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source2" />
-                              <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="3" To="8" Label="Source3" />
-                              <Edge From="4" To="8" Label="Source2" />
-                              <Edge From="5" To="6" Label="Source1" />
-                              <Edge From="6" To="7" Label="Source1" />
-                              <Edge From="7" To="8" Label="Source4" />
-                              <Edge From="8" To="9" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="FileName" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="FrameRate" />
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="cv:VideoWriter">
-                            <cv:FileName>C:/temp_data\sub-M26021\ses-0_0_Track1RUN1_date-2026-10-01T14-54-38\VideoData\VideoData.avi</cv:FileName>
-                            <cv:Suffix>None</cv:Suffix>
-                            <cv:Buffered>true</cv:Buffered>
-                            <cv:Overwrite>false</cv:Overwrite>
-                            <cv:FourCC>FMP4</cv:FourCC>
-                            <cv:FrameRate>50</cv:FrameRate>
-                            <cv:FrameSize>
-                              <cv:Width>0</cv:Width>
-                              <cv:Height>0</cv:Height>
-                            </cv:FrameSize>
-                            <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="9" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="7" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source2" />
-                        <Edge From="6" To="13" Label="Source2" />
-                        <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="8" To="9" Label="Source2" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="16" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="16" Label="Source2" />
-                        <Edge From="15" To="16" Label="Source3" />
-                        <Edge From="16" To="17" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Switch" />
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="3" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source2" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogVideo.bonsai">
+              <LogName>VideoData_Camera1</LogName>
+              <FrameRate>50</FrameRate>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>SessionSchema</Name>
@@ -763,8 +525,8 @@
                 <p1:Formatting>None</p1:Formatting>
               </Combinator>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Logging:LogDataSchema.bonsai">
-              <Name>SessionSettings</Name>
+            <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogDataSchema.bonsai">
+              <Name>Schema</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RigSchema</Name>
@@ -774,8 +536,8 @@
                 <p1:Formatting>None</p1:Formatting>
               </Combinator>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Logging:LogDataSchema.bonsai">
-              <Name>RigSchema</Name>
+            <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogDataSchema.bonsai">
+              <Name>Schema</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>TaskLogicSchema</Name>
@@ -785,8 +547,8 @@
                 <p1:Formatting>None</p1:Formatting>
               </Combinator>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Logging:LogDataSchema.bonsai">
-              <Name>TaskSchema</Name>
+            <Expression xsi:type="IncludeWorkflow" Path="OpenRigs.Logging:LogDataSchema.bonsai">
+              <Name>Schema</Name>
             </Expression>
           </Nodes>
           <Edges>

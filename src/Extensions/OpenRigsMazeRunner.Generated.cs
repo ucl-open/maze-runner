@@ -5,7 +5,7 @@
 //----------------------
 
 
-namespace UclOpenMazeRunner
+namespace OpenRigsMazeRunner
 {
     #pragma warning disable // Disable all warnings
 
@@ -202,10 +202,10 @@ namespace UclOpenMazeRunner
 
 
     /// <summary>
-    /// The base class for creating ucl-open experiment models.
+    /// The base class for creating open-rigs experiment models.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("The base class for creating ucl-open experiment models.")]
+    [System.ComponentModel.DescriptionAttribute("The base class for creating open-rigs experiment models.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ExperimentSession
@@ -428,6 +428,307 @@ namespace UclOpenMazeRunner
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class OpenRigsMazeRunnerRig
+    {
+    
+        private string _rootPath;
+    
+        private SpinnakerCamera _camera;
+    
+        private HarpBehavior _behaviorBoard;
+    
+        private CameraTriggerController _cameraTriggerController;
+    
+        public OpenRigsMazeRunnerRig()
+        {
+            _camera = new SpinnakerCamera();
+            _behaviorBoard = new HarpBehavior();
+            _cameraTriggerController = new CameraTriggerController();
+        }
+    
+        protected OpenRigsMazeRunnerRig(OpenRigsMazeRunnerRig other)
+        {
+            _rootPath = other._rootPath;
+            _camera = other._camera;
+            _behaviorBoard = other._behaviorBoard;
+            _cameraTriggerController = other._cameraTriggerController;
+        }
+    
+        /// <summary>
+        /// The root path on which to log all data.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("rootPath", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rootPath")]
+        [System.ComponentModel.DescriptionAttribute("The root path on which to log all data.")]
+        public string RootPath
+        {
+            get
+            {
+                return _rootPath;
+            }
+            set
+            {
+                _rootPath = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("camera", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="camera")]
+        public SpinnakerCamera Camera
+        {
+            get
+            {
+                return _camera;
+            }
+            set
+            {
+                _camera = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("behaviorBoard", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="behaviorBoard")]
+        public HarpBehavior BehaviorBoard
+        {
+            get
+            {
+                return _behaviorBoard;
+            }
+            set
+            {
+                _behaviorBoard = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("cameraTriggerController", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="cameraTriggerController")]
+        public CameraTriggerController CameraTriggerController
+        {
+            get
+            {
+                return _cameraTriggerController;
+            }
+            set
+            {
+                _cameraTriggerController = value;
+            }
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerRig> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OpenRigsMazeRunnerRig(this)));
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerRig> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new OpenRigsMazeRunnerRig(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("RootPath = " + _rootPath + ", ");
+            stringBuilder.Append("Camera = " + _camera + ", ");
+            stringBuilder.Append("BehaviorBoard = " + _behaviorBoard + ", ");
+            stringBuilder.Append("CameraTriggerController = " + _cameraTriggerController);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class OpenRigsMazeRunnerTaskLogic
+    {
+    
+        private string _name;
+    
+        private OpenRigsMazeRunnerTaskParameters _taskParameters;
+    
+        public OpenRigsMazeRunnerTaskLogic()
+        {
+            _name = "OpenRigsMazeRunner";
+            _taskParameters = new OpenRigsMazeRunnerTaskParameters();
+        }
+    
+        protected OpenRigsMazeRunnerTaskLogic(OpenRigsMazeRunnerTaskLogic other)
+        {
+            _name = other._name;
+            _taskParameters = other._taskParameters;
+        }
+    
+        /// <summary>
+        /// Name of the task logic
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
+        [System.ComponentModel.DescriptionAttribute("Name of the task logic")]
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+    
+        /// <summary>
+        /// Parameters of the task logic
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("taskParameters", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskParameters")]
+        [System.ComponentModel.DescriptionAttribute("Parameters of the task logic")]
+        public OpenRigsMazeRunnerTaskParameters TaskParameters
+        {
+            get
+            {
+                return _taskParameters;
+            }
+            set
+            {
+                _taskParameters = value;
+            }
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerTaskLogic> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OpenRigsMazeRunnerTaskLogic(this)));
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerTaskLogic> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new OpenRigsMazeRunnerTaskLogic(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Name = " + _name + ", ");
+            stringBuilder.Append("TaskParameters = " + _taskParameters);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class OpenRigsMazeRunnerTaskParameters
+    {
+    
+        private BackgroundSubtractionParemeters _initialBackgroundSubtraction;
+    
+        private BackgroundSubtractionParemeters _onlineBackgroundSubtraction;
+    
+        public OpenRigsMazeRunnerTaskParameters()
+        {
+            _initialBackgroundSubtraction = new BackgroundSubtractionParemeters();
+            _onlineBackgroundSubtraction = new BackgroundSubtractionParemeters();
+        }
+    
+        protected OpenRigsMazeRunnerTaskParameters(OpenRigsMazeRunnerTaskParameters other)
+        {
+            _initialBackgroundSubtraction = other._initialBackgroundSubtraction;
+            _onlineBackgroundSubtraction = other._onlineBackgroundSubtraction;
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("initialBackgroundSubtraction", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialBackgroundSubtraction")]
+        public BackgroundSubtractionParemeters InitialBackgroundSubtraction
+        {
+            get
+            {
+                return _initialBackgroundSubtraction;
+            }
+            set
+            {
+                _initialBackgroundSubtraction = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("onlineBackgroundSubtraction", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="onlineBackgroundSubtraction")]
+        public BackgroundSubtractionParemeters OnlineBackgroundSubtraction
+        {
+            get
+            {
+                return _onlineBackgroundSubtraction;
+            }
+            set
+            {
+                _onlineBackgroundSubtraction = value;
+            }
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerTaskParameters> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OpenRigsMazeRunnerTaskParameters(this)));
+        }
+    
+        public System.IObservable<OpenRigsMazeRunnerTaskParameters> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new OpenRigsMazeRunnerTaskParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("InitialBackgroundSubtraction = " + _initialBackgroundSubtraction + ", ");
+            stringBuilder.Append("OnlineBackgroundSubtraction = " + _onlineBackgroundSubtraction);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class SpinnakerCamera
     {
     
@@ -606,345 +907,6 @@ namespace UclOpenMazeRunner
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class UclOpenMazeRunnerRig
-    {
-    
-        private string _rootPath;
-    
-        private string _version;
-    
-        private SpinnakerCamera _camera;
-    
-        private HarpBehavior _behaviorBoard;
-    
-        private CameraTriggerController _cameraTriggerController;
-    
-        public UclOpenMazeRunnerRig()
-        {
-            _version = "0.0.0-rc1";
-            _camera = new SpinnakerCamera();
-            _behaviorBoard = new HarpBehavior();
-            _cameraTriggerController = new CameraTriggerController();
-        }
-    
-        protected UclOpenMazeRunnerRig(UclOpenMazeRunnerRig other)
-        {
-            _rootPath = other._rootPath;
-            _version = other._version;
-            _camera = other._camera;
-            _behaviorBoard = other._behaviorBoard;
-            _cameraTriggerController = other._cameraTriggerController;
-        }
-    
-        /// <summary>
-        /// The root path on which to log all data.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("rootPath", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rootPath")]
-        [System.ComponentModel.DescriptionAttribute("The root path on which to log all data.")]
-        public string RootPath
-        {
-            get
-            {
-                return _rootPath;
-            }
-            set
-            {
-                _rootPath = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("version")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="version")]
-        public string Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("camera", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="camera")]
-        public SpinnakerCamera Camera
-        {
-            get
-            {
-                return _camera;
-            }
-            set
-            {
-                _camera = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("behaviorBoard", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="behaviorBoard")]
-        public HarpBehavior BehaviorBoard
-        {
-            get
-            {
-                return _behaviorBoard;
-            }
-            set
-            {
-                _behaviorBoard = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("cameraTriggerController", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="cameraTriggerController")]
-        public CameraTriggerController CameraTriggerController
-        {
-            get
-            {
-                return _cameraTriggerController;
-            }
-            set
-            {
-                _cameraTriggerController = value;
-            }
-        }
-    
-        public System.IObservable<UclOpenMazeRunnerRig> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UclOpenMazeRunnerRig(this)));
-        }
-    
-        public System.IObservable<UclOpenMazeRunnerRig> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new UclOpenMazeRunnerRig(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("RootPath = " + _rootPath + ", ");
-            stringBuilder.Append("Version = " + _version + ", ");
-            stringBuilder.Append("Camera = " + _camera + ", ");
-            stringBuilder.Append("BehaviorBoard = " + _behaviorBoard + ", ");
-            stringBuilder.Append("CameraTriggerController = " + _cameraTriggerController);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class UclOpenMazeRunnerTaskLogic
-    {
-    
-        private string _version;
-    
-        private string _name;
-    
-        private UclOpenMazeRunnerTaskParameters _taskParameters;
-    
-        public UclOpenMazeRunnerTaskLogic()
-        {
-            _version = "0.0.0-rc1";
-            _name = "UclOpenMazeRunner";
-            _taskParameters = new UclOpenMazeRunnerTaskParameters();
-        }
-    
-        protected UclOpenMazeRunnerTaskLogic(UclOpenMazeRunnerTaskLogic other)
-        {
-            _version = other._version;
-            _name = other._name;
-            _taskParameters = other._taskParameters;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("version")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="version")]
-        public string Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-    
-        /// <summary>
-        /// Name of the task logic
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("name")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        [System.ComponentModel.DescriptionAttribute("Name of the task logic")]
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
-        }
-    
-        /// <summary>
-        /// Parameters of the task logic
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("taskParameters", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskParameters")]
-        [System.ComponentModel.DescriptionAttribute("Parameters of the task logic")]
-        public UclOpenMazeRunnerTaskParameters TaskParameters
-        {
-            get
-            {
-                return _taskParameters;
-            }
-            set
-            {
-                _taskParameters = value;
-            }
-        }
-    
-        public System.IObservable<UclOpenMazeRunnerTaskLogic> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UclOpenMazeRunnerTaskLogic(this)));
-        }
-    
-        public System.IObservable<UclOpenMazeRunnerTaskLogic> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new UclOpenMazeRunnerTaskLogic(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Version = " + _version + ", ");
-            stringBuilder.Append("Name = " + _name + ", ");
-            stringBuilder.Append("TaskParameters = " + _taskParameters);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class UclOpenMazeRunnerTaskParameters
-    {
-    
-        private BackgroundSubtractionParemeters _initialBackgroundSubtraction;
-    
-        private BackgroundSubtractionParemeters _onlineBackgroundSubtraction;
-    
-        public UclOpenMazeRunnerTaskParameters()
-        {
-            _initialBackgroundSubtraction = new BackgroundSubtractionParemeters();
-            _onlineBackgroundSubtraction = new BackgroundSubtractionParemeters();
-        }
-    
-        protected UclOpenMazeRunnerTaskParameters(UclOpenMazeRunnerTaskParameters other)
-        {
-            _initialBackgroundSubtraction = other._initialBackgroundSubtraction;
-            _onlineBackgroundSubtraction = other._onlineBackgroundSubtraction;
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("initialBackgroundSubtraction", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialBackgroundSubtraction")]
-        public BackgroundSubtractionParemeters InitialBackgroundSubtraction
-        {
-            get
-            {
-                return _initialBackgroundSubtraction;
-            }
-            set
-            {
-                _initialBackgroundSubtraction = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("onlineBackgroundSubtraction", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="onlineBackgroundSubtraction")]
-        public BackgroundSubtractionParemeters OnlineBackgroundSubtraction
-        {
-            get
-            {
-                return _onlineBackgroundSubtraction;
-            }
-            set
-            {
-                _onlineBackgroundSubtraction = value;
-            }
-        }
-    
-        public System.IObservable<UclOpenMazeRunnerTaskParameters> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UclOpenMazeRunnerTaskParameters(this)));
-        }
-    
-        public System.IObservable<UclOpenMazeRunnerTaskParameters> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new UclOpenMazeRunnerTaskParameters(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("InitialBackgroundSubtraction = " + _initialBackgroundSubtraction + ", ");
-            stringBuilder.Append("OnlineBackgroundSubtraction = " + _onlineBackgroundSubtraction);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Json
     {
     
@@ -1024,24 +986,24 @@ namespace UclOpenMazeRunner
             return Process<HarpBehavior>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<OpenRigsMazeRunnerRig> source)
+        {
+            return Process<OpenRigsMazeRunnerRig>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<OpenRigsMazeRunnerTaskLogic> source)
+        {
+            return Process<OpenRigsMazeRunnerTaskLogic>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<OpenRigsMazeRunnerTaskParameters> source)
+        {
+            return Process<OpenRigsMazeRunnerTaskParameters>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
             return Process<SpinnakerCamera>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<UclOpenMazeRunnerRig> source)
-        {
-            return Process<UclOpenMazeRunnerRig>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<UclOpenMazeRunnerTaskLogic> source)
-        {
-            return Process<UclOpenMazeRunnerTaskLogic>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<UclOpenMazeRunnerTaskParameters> source)
-        {
-            return Process<UclOpenMazeRunnerTaskParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Json> source)
@@ -1062,10 +1024,10 @@ namespace UclOpenMazeRunner
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraTriggerController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExperimentSession>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerRig>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenMazeRunnerRig>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenMazeRunnerTaskLogic>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenMazeRunnerTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Json>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -1136,24 +1098,24 @@ namespace UclOpenMazeRunner
             return Process<HarpBehavior>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<OpenRigsMazeRunnerRig> source)
+        {
+            return Process<OpenRigsMazeRunnerRig>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<OpenRigsMazeRunnerTaskLogic> source)
+        {
+            return Process<OpenRigsMazeRunnerTaskLogic>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<OpenRigsMazeRunnerTaskParameters> source)
+        {
+            return Process<OpenRigsMazeRunnerTaskParameters>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
             return Process<SpinnakerCamera>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<UclOpenMazeRunnerRig> source)
-        {
-            return Process<UclOpenMazeRunnerRig>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<UclOpenMazeRunnerTaskLogic> source)
-        {
-            return Process<UclOpenMazeRunnerTaskLogic>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<UclOpenMazeRunnerTaskParameters> source)
-        {
-            return Process<UclOpenMazeRunnerTaskParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Json> source)
@@ -1174,10 +1136,10 @@ namespace UclOpenMazeRunner
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraTriggerController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExperimentSession>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerRig>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OpenRigsMazeRunnerTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenMazeRunnerRig>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenMazeRunnerTaskLogic>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenMazeRunnerTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Json>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {

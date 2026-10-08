@@ -1,24 +1,12 @@
 import os
 
-from ucl_open_maze_runner.task import (
-    UclOpenMazeRunnerTaskLogic,
-    UclOpenMazeRunnerTaskParameters,
-    BackgroundSubtractionParemeters
+from open_rigs_maze_runner.task import (
+    OpenRigsMazeRunnerTaskLogic,
+    OpenRigsMazeRunnerTaskParameters,
 )
 
-task_logic = UclOpenMazeRunnerTaskLogic(
-    task_parameters=UclOpenMazeRunnerTaskParameters(
-        initial_background_subtraction=BackgroundSubtractionParemeters(
-            threshold_value=50,
-            background_frames=100,
-            adaptation_rate=0
-        ),
-        online_background_subtraction=BackgroundSubtractionParemeters(
-            threshold_value=33,
-            background_frames=1,
-            adaptation_rate=1
-        )
-    )
+task_logic = OpenRigsMazeRunnerTaskLogic(
+    task_parameters=OpenRigsMazeRunnerTaskParameters(),
 )
 
 def main(path_seed: str = "./local/{schema}.json"):

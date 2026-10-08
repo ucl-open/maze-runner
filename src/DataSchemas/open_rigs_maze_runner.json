@@ -51,7 +51,7 @@
       "type": "object"
     },
     "ExperimentSession": {
-      "description": "The base class for creating ucl-open experiment models.",
+      "description": "The base class for creating open-rigs experiment models.",
       "properties": {
         "workflow": {
           "description": "Path to the workflow running the experiment.",
@@ -106,6 +106,73 @@
       "title": "HarpBehavior",
       "type": "object"
     },
+    "OpenRigsMazeRunnerRig": {
+      "properties": {
+        "rootPath": {
+          "description": "The root path on which to log all data.",
+          "title": "RootPath",
+          "type": "string"
+        },
+        "camera": {
+          "$ref": "#/$defs/SpinnakerCamera",
+          "title": "Camera"
+        },
+        "behaviorBoard": {
+          "$ref": "#/$defs/HarpBehavior",
+          "title": "BehaviorBoard"
+        },
+        "cameraTriggerController": {
+          "$ref": "#/$defs/CameraTriggerController"
+        }
+      },
+      "required": [
+        "rootPath",
+        "camera",
+        "behaviorBoard",
+        "cameraTriggerController"
+      ],
+      "title": "OpenRigsMazeRunnerRig",
+      "type": "object"
+    },
+    "OpenRigsMazeRunnerTaskLogic": {
+      "properties": {
+        "name": {
+          "const": "OpenRigsMazeRunner",
+          "default": "OpenRigsMazeRunner",
+          "description": "Name of the task logic",
+          "title": "Name",
+          "type": "string"
+        },
+        "taskParameters": {
+          "$ref": "#/$defs/OpenRigsMazeRunnerTaskParameters",
+          "description": "Parameters of the task logic",
+          "title": "TaskParameters"
+        }
+      },
+      "required": [
+        "taskParameters"
+      ],
+      "title": "OpenRigsMazeRunnerTaskLogic",
+      "type": "object"
+    },
+    "OpenRigsMazeRunnerTaskParameters": {
+      "properties": {
+        "initialBackgroundSubtraction": {
+          "$ref": "#/$defs/BackgroundSubtractionParemeters",
+          "title": "InitialBackgroundSubtraction"
+        },
+        "onlineBackgroundSubtraction": {
+          "$ref": "#/$defs/BackgroundSubtractionParemeters",
+          "title": "OnlineBackgroundSubtraction"
+        }
+      },
+      "required": [
+        "initialBackgroundSubtraction",
+        "onlineBackgroundSubtraction"
+      ],
+      "title": "OpenRigsMazeRunnerTaskParameters",
+      "type": "object"
+    },
     "SpinnakerCamera": {
       "properties": {
         "triggerFrequency": {
@@ -154,97 +221,18 @@
       },
       "title": "SpinnakerCamera",
       "type": "object"
-    },
-    "UclOpenMazeRunnerRig": {
-      "properties": {
-        "rootPath": {
-          "description": "The root path on which to log all data.",
-          "title": "RootPath",
-          "type": "string"
-        },
-        "version": {
-          "const": "0.0.0-rc1",
-          "default": "0.0.0-rc1",
-          "title": "Version",
-          "type": "string"
-        },
-        "camera": {
-          "$ref": "#/$defs/SpinnakerCamera",
-          "title": "Camera"
-        },
-        "behaviorBoard": {
-          "$ref": "#/$defs/HarpBehavior",
-          "title": "BehaviorBoard"
-        },
-        "cameraTriggerController": {
-          "$ref": "#/$defs/CameraTriggerController"
-        }
-      },
-      "required": [
-        "rootPath",
-        "camera",
-        "behaviorBoard",
-        "cameraTriggerController"
-      ],
-      "title": "UclOpenMazeRunnerRig",
-      "type": "object"
-    },
-    "UclOpenMazeRunnerTaskLogic": {
-      "properties": {
-        "version": {
-          "const": "0.0.0-rc1",
-          "default": "0.0.0-rc1",
-          "title": "Version",
-          "type": "string"
-        },
-        "name": {
-          "const": "UclOpenMazeRunner",
-          "default": "UclOpenMazeRunner",
-          "description": "Name of the task logic",
-          "title": "Name",
-          "type": "string"
-        },
-        "taskParameters": {
-          "$ref": "#/$defs/UclOpenMazeRunnerTaskParameters",
-          "description": "Parameters of the task logic",
-          "title": "TaskParameters"
-        }
-      },
-      "required": [
-        "taskParameters"
-      ],
-      "title": "UclOpenMazeRunnerTaskLogic",
-      "type": "object"
-    },
-    "UclOpenMazeRunnerTaskParameters": {
-      "properties": {
-        "initialBackgroundSubtraction": {
-          "$ref": "#/$defs/BackgroundSubtractionParemeters",
-          "title": "InitialBackgroundSubtraction"
-        },
-        "onlineBackgroundSubtraction": {
-          "$ref": "#/$defs/BackgroundSubtractionParemeters",
-          "title": "OnlineBackgroundSubtraction"
-        }
-      },
-      "required": [
-        "initialBackgroundSubtraction",
-        "onlineBackgroundSubtraction"
-      ],
-      "title": "UclOpenMazeRunnerTaskParameters",
-      "type": "object"
     }
   },
   "anyOf": [
     {
-      "$ref": "#/$defs/UclOpenMazeRunnerTaskLogic"
+      "$ref": "#/$defs/OpenRigsMazeRunnerTaskLogic"
     },
     {
-      "$ref": "#/$defs/UclOpenMazeRunnerRig"
+      "$ref": "#/$defs/OpenRigsMazeRunnerRig"
     },
     {
       "$ref": "#/$defs/ExperimentSession"
     }
   ],
-  "title": "RootModel[Union[UclOpenMazeRunnerTaskLogic, UclOpenMazeRunnerRig, ExperimentSession]]"
+  "title": "RootModel[Union[OpenRigsMazeRunnerTaskLogic, OpenRigsMazeRunnerRig, ExperimentSession]]"
 }
