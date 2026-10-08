@@ -3,9 +3,12 @@ import os
 
 from open_rigs.core.experiment import ExperimentSession
 
-# TODO - autofill experiment fields
-session = Experiment(
-
+session = ExperimentSession(
+    workflow="main_debug.bonsai",
+    repository_url="",
+    commit="",
+    session_id="001",
+    subject_id="Plimbo",
 )
 
 def main(path_seed: str = "./local/{schema}.json"):
